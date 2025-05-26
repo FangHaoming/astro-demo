@@ -1,0 +1,103 @@
+---
+import { LanguageType, checkEn } from "../constants";
+import { t } from "i18next";
+const isDev = import.meta.env.DEV;
+
+interface Props {
+  lang?: `${LanguageType}`;
+}
+
+const { lang = LanguageType.ZH } = Astro.props;
+
+const isEn = checkEn(lang);
+
+const navList = [
+  { name: t("main:nav_home"), to: "/" },
+  { name: t("main:nav_case"), to: "/case.html" },
+  { name: t("main:nav_about"), to: "/about.html" },
+];
+
+const prefix =
+  lang === LanguageType.ZH ? (isDev ? `/${lang}` : "") : `/${lang}`;
+---
+
+<header class="rayvision-header">
+  <a href="/" class="logo">
+    <img src="/favicon.ico" alt="Rayvision瑞云logo" />
+  </a>
+  <nav class="nav-wrapper mb-none">
+    {
+      navList.map((item) => (
+        <a
+          href={`${prefix}${item.to}`}
+          class:list={["nav-item", { active: Astro.url.pathname === item.to }]}
+        >
+          {item.name}
+        </a>
+      ))
+    }
+    <a href={isEn ? "/" : "/En/"} class="locale-switch">
+      {isEn ? "中文" : "EN"}
+    </a>
+  </nav>
+</header>
+
+<style>
+  .rayvision-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 80px;
+    background: rgba(18, 20, 22, 0.8);
+    backdrop-filter: blur(8px);
+  }
+
+  .logo {
+    cursor: pointer;
+    height: 32px;
+  }
+
+  .logo img {
+    height: 100%;
+  }
+
+  .nav-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .nav-item {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color 0.3s;
+  }
+
+  .nav-item:hover,
+  .nav-item.active {
+    color: #fff;
+  }
+
+  .locale-switch {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color 0.3s;
+    cursor: pointer;
+  }
+
+  .locale-switch:hover {
+    color: #fff;
+  }
+
+  @media (max-width: 768px) {
+    .mb-none {
+      display: none;
+    }
+  }
+</style>

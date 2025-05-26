@@ -1,0 +1,40 @@
+---
+import Layout from "@/components/layout.astro";
+import Header from "@/components/header.astro";
+import { getLangPath, initI18n } from "@/i18n";
+
+const lang = Astro.params.lang;
+await initI18n(lang);
+export const getStaticPaths = getLangPath;
+---
+
+<Layout title="瑞云渲染 - 案例展示" lang={lang}>
+  <Header lang={lang} />
+  <main>
+    <h1>案例展示</h1>
+    <div class="cases-container">
+      <p>瑞云渲染助力众多优秀作品</p>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 80px 1rem;
+    max-width: 1200px;
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+  h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+  .cases-container {
+    text-align: center;
+  }
+</style>

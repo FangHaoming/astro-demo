@@ -1,0 +1,41 @@
+---
+import Layout from "@/components/layout.astro";
+import PartialContent from "@/pages/partial/index.astro";
+import { t } from "i18next";
+import { initI18n, getLangPath } from "@/i18n";
+
+const lang = Astro.params.lang;
+await initI18n(lang);
+export const getStaticPaths = getLangPath;
+---
+
+<Layout lang={lang} title="首页">
+  <main>
+    {t("common:page_products_seo_title")}
+    <PartialContent />
+  </main>
+</Layout>
+
+<style>
+  main {
+    background-color: black;
+    margin: auto;
+    padding: 80px 1rem;
+    max-width: 1200px;
+    color: white;
+    font-size: 20px;
+    line-height: 1.6;
+  }
+  h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+</style>
+
+<script>
+  /* inline: relative & npm package imports are not supported. */
+  console.log("I am inlined right here in the final output HTML.");
+</script>

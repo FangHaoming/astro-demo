@@ -1,0 +1,41 @@
+---
+import { initI18n } from "@/i18n";
+import i18next from "i18next";
+import Header from '../components/header.astro';
+import Seo from '../components/seo.astro';
+import { LanguageType } from '../constants';
+import type { ISeoProps } from '../types';
+
+type Props = ISeoProps & {
+  showHeader?: boolean;
+  showFooter?: boolean;
+};
+
+const { showHeader = true, showFooter, ...seoProps } = Astro.props;
+
+const { lang = LanguageType.ZH } = seoProps
+await initI18n(lang as LanguageType);
+i18next.changeLanguage(lang);
+console.log("!!!!Layout", lang, i18next.language);
+
+---
+
+<!doctype html
+<html lang={lang.toLowerCase()}>
+  <Seo {...seoProps} />
+  <body>
+    {showHeader && <Header lang={lang} />}
+    {Astro.slots.header && <slot name="header" />}
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  html,
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+</style>
+

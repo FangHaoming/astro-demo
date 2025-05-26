@@ -1,0 +1,32 @@
+---
+import Layout from '@/components/layout.astro'
+export async function getStaticPaths() {
+  const data = await Promise.resolve({
+    post: 'this is a post',
+  });
+  return [
+    // 只能是params和props，params决定路径，props决定数据
+    { params: { id: '1' }, props: { data } },
+    { params: { id: '2' }, props: { data } },
+    { params: { id: '3' }, props: { data } },
+  ];
+}
+
+const { id } = Astro.params;
+const { data } = Astro.props;
+
+---
+
+
+<Layout>
+  <span>{id}</span>
+  <span>{data.post}</span>
+</Layout>
+
+<style>
+  span {
+    color: #000;
+    font-size: 200px;
+    margin-right: 100px;;
+  }
+</style>

@@ -1,0 +1,39 @@
+---
+import { checkEn, LanguageType } from "../constants";
+import type { ISeoProps } from "../types";
+
+type Props = ISeoProps;
+
+const {
+  title = "瑞云官网,瑞云科技,rayvision,Renderbus,RaySync镭速",
+  keywords = "",
+  description = "",
+  canonical = "",
+  ogImage = "",
+  ogUrl = "/",
+  type = "article",
+  lang = LanguageType.ZH,
+} = Astro.props;
+
+const _ogImage =
+  ogImage || (checkEn(lang) ? "seo-default-en.jpg" : "seo-default-cn.jpg");
+---
+
+<head>
+  <title>{title}</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content={keywords} />
+  <meta name="applicable-device" content="pc,mobile" />
+  <meta name="description" content={description} />
+  <meta property="og:image" content={`https://www.rayvision.com/${_ogImage}`} />
+  <meta property="og:url" content={`https://www.rayvision.com${ogUrl}`} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content={type} />
+  {
+    canonical && (
+      <link rel="canonical" href={`https://www.rayvision.com${canonical}`} />
+    )
+  }
+</head>

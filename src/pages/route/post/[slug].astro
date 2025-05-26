@@ -1,0 +1,55 @@
+---
+import Layout from "@/components/layout.astro";
+export const prerender = false;
+Astro.response.headers.set("Cache-Control", "public, max-age=3600");
+const cookie = Astro.cookies.get("counter");
+
+const artList = await Promise.resolve([
+  {
+    slug: "1",
+    post: `
+    <span>post 1</span>
+    `,
+  },
+  {
+    slug: "2",
+    post: `
+    <span>post 2</span>
+    `,
+  },
+  {
+    slug: "3",
+    post: `
+    <span>post 3</span>
+    `,
+  },
+]);
+const { slug } = Astro.params;
+// 根据slug查询文章
+const arts = artList.find((item) => item.slug === slug)?.post;
+
+if (!arts) {
+  return new Response(null, {
+    status: 404,
+    statusText: "Not found",
+  });
+  // return Astro.redirect("/", 301);
+}
+---
+
+<Layout>
+  <div>
+    <Fragment set:html={arts} />
+    <span>counter: {cookie?.number()}</span>
+  </div>
+</Layout>
+
+<style>
+  div {
+    span {
+      color: #000;
+      font-size: 200px;
+      margin-right: 100px;
+    }
+  }
+</style>
