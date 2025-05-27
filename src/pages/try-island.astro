@@ -1,15 +1,13 @@
 ---
 import SvelteBlock from "@/components/svelte/index.svelte";
+import Layout from "@/components/layout.astro";
+import { LanguageType } from "@/constants";
+import { initI18n } from "@/i18n";
+const lang = LanguageType.EN;
+await initI18n(lang);
+
 ---
 
-<div>
-  <SvelteBlock client:load />
-</div>
-
-<style>
-  div {
-    border: 1px dashed red;
-    margin: 10px;
-    padding: 10px;
-  }
-</style>
+<Layout title="中文">
+  <SvelteBlock client:load lang={lang} />
+</Layout>
