@@ -19,3 +19,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+**/**/i18n/locales/zh/*.json
+**/**/i18n/locales/En/*.json
